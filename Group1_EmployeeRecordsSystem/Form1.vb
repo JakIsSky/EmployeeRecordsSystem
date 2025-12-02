@@ -36,14 +36,14 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
-        Dim query As String = "SELECT * FROM employee_records_system.employee_tbl;"
+        Dim query As String = "SELECT * FROM employee_records_system.employee_tbl WHERE is_deleted=0;"
         Try
-            Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
+            Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=crud_demo_db;")
                 Dim adapter As New MySqlDataAdapter(query, conn)
                 Dim table As New DataTable()
                 adapter.Fill(table)
                 DataGridViewRecord.DataSource = table
-                DataGridViewRecord.Columns("Id").Visible = True
+                DataGridViewRecord.Columns("id").Visible = False
                 DataGridViewRecord.Columns("is_deleted").Visible = False
             End Using
         Catch ex As Exception
@@ -51,7 +51,7 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub DataGridViewRecord_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewRecord.CellContentClick
+    Private Sub DataGridViewRecord_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewRecord.CellClick
         If e.RowIndex >= 0 Then
             Dim selectedRow As DataGridViewRow = DataGridViewRecord.Rows(e.RowIndex)
             TextBoxName.Text = selectedRow.Cells("name").Value.ToString()
@@ -59,7 +59,7 @@ Public Class Form1
             TextBoxSalary.Text = selectedRow.Cells("salary").Value.ToString()
             TextBoxDepartment.Text = selectedRow.Cells("department").Value.ToString()
 
-            TextBoxHiddenId.Text = selectedRow.Cells("Id").Value.ToString()
+            TextBoxHiddenId.Text = Convert.ToInt32(selectedRow.Cells("Id").Value)
 
         End If
     End Sub
@@ -85,9 +85,9 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonDelete_Click(sender As Object, e As EventArgs) Handles ButtonDelete.Click
-        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` 
-                                SET `is_deleted` = 1 
-                                WHERE (`Id` = @Id);"
+        Dim query As String = "UPDATE employee_records_system.employee_tbl 
+                                SET is_deleted = 1 
+                                WHERE (Id = @Id);"
 
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
