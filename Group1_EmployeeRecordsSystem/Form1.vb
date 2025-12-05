@@ -17,7 +17,7 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonCreate_Click(sender As Object, e As EventArgs) Handles ButtonCreate.Click
-        Dim query As String = "INSERT INTO employee_tbl (name, position, salary, department) VALUES (@name, @position, @salary, @department)"
+        Dim query As String = "INSERT INTO `employee_records_system`.`employee_tbl` (`name`, `position`, `salary`, `department`) VALUES (@name, @position, @salary, @department);"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
                 conn.Open()
@@ -36,7 +36,7 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
-        Dim query As String = "SELECT * FROM employee_records_system.employee_tbl WHERE is_deleted=0;"
+        Dim query As String = "SELECT * FROM `employee_records_system`.`employee_tbl` WHERE `is_deleted`=0;"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=crud_demo_db;")
                 Dim adapter As New MySqlDataAdapter(query, conn)
@@ -59,13 +59,13 @@ Public Class Form1
             TextBoxSalary.Text = selectedRow.Cells("salary").Value.ToString()
             TextBoxDepartment.Text = selectedRow.Cells("department").Value.ToString()
 
-            TextBoxHiddenId.Text = Convert.ToInt32(selectedRow.Cells("Id").Value)
+            TextBoxHiddenId.Text = selectedRow.Cells("Id").Value.ToString()
 
         End If
     End Sub
 
     Private Sub ButtonUpdate_Click(sender As Object, e As EventArgs) Handles ButtonUpdate.Click
-        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` SET `name` = @name, `position` = @position, `salary` = @salary, `position` = @department WHERE `Id` = @Id"
+        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` SET `name`=@name, `position`=@position, `salary`=@salary, `position`=@department WHERE `Id`=@Id;"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
                 conn.Open()
@@ -85,9 +85,7 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonDelete_Click(sender As Object, e As EventArgs) Handles ButtonDelete.Click
-        Dim query As String = "UPDATE employee_records_system.employee_tbl 
-                                SET is_deleted = 1 
-                                WHERE (Id = @Id);"
+        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` SET `is_deleted`=1 WHERE `Id`=@Id;"
 
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
