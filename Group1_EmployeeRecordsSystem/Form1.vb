@@ -3,6 +3,7 @@
 Public Class Form1
     Dim conn As MySqlConnection
     Dim COMMAND As MySqlCommand
+
     Private Sub ButtonConnect_Click(sender As Object, e As EventArgs) Handles ButtonConnect.Click
         conn = New MySqlConnection
         conn.ConnectionString = "server=localhost; userid=root; password=root; database=employee_records_system;"
@@ -65,16 +66,16 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonUpdate_Click(sender As Object, e As EventArgs) Handles ButtonUpdate.Click
-        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` SET `name`=@name, `position`=@position, `salary`=@salary, `position`=@department WHERE `Id`=@Id;"
+        Dim query As String = "UPDATE `employee_records_system`.`employee_tbl` SET `name`=@name, `position`=@position, `salary`=@salary, `department`=@department WHERE `Id`=@Id;"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
                 conn.Open()
                 Using cmd As New MySqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@id", CInt(TextBoxHiddenId.Text))
+                    cmd.Parameters.AddWithValue("@Id", CInt(TextBoxHiddenId.Text))
                     cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
-                    cmd.Parameters.AddWithValue("@age", TextBoxPosition.Text)
-                    cmd.Parameters.AddWithValue("@email", CInt(TextBoxSalary.Text))
-                    cmd.Parameters.AddWithValue("@email", TextBoxDepartment.Text)
+                    cmd.Parameters.AddWithValue("@position", TextBoxPosition.Text)
+                    cmd.Parameters.AddWithValue("@salary", CInt(TextBoxSalary.Text))
+                    cmd.Parameters.AddWithValue("@department", TextBoxDepartment.Text)
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Record updated successfully!")
                 End Using

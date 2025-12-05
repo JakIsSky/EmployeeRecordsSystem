@@ -168,6 +168,7 @@ Partial Class Form1
         Me.TextBoxHiddenId.Name = "TextBoxHiddenId"
         Me.TextBoxHiddenId.Size = New System.Drawing.Size(100, 20)
         Me.TextBoxHiddenId.TabIndex = 17
+        Me.TextBoxHiddenId.Visible = False
         '
         'Form1
         '
