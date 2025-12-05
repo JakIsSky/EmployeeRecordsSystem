@@ -36,9 +36,9 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
-        Dim query As String = "SELECT * FROM `employee_records_system`.`employee_tbl` WHERE `is_deleted`=0;"
+        Dim query As String = "SELECT * FROM employee_records_system.employee_tbl WHERE is_deleted = 0;"
         Try
-            Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=crud_demo_db;")
+            Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=employee_records_system;")
                 Dim adapter As New MySqlDataAdapter(query, conn)
                 Dim table As New DataTable()
                 adapter.Fill(table)
